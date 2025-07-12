@@ -1,0 +1,17 @@
+body {
+  font-family: sans-serif;
+  padding: 1em;
+  max-width: 600px;
+  margin: auto;
+}
+input {
+  display: block;
+  margin: 1em 0;
+  padding: 0.5em;
+  width: 100%;
+  box-sizing: border-box;
+}
+button {
+  padding: 0.5em 1em;
+  font-size: 1em;
+}

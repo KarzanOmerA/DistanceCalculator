@@ -15,3 +15,14 @@ button {
   padding: 0.5em 1em;
   font-size: 1em;
 }
+#drop-area {
+  padding: 2em;
+  margin-bottom: 1em;
+  border: 2px dashed #ccc;
+  text-align: center;
+  background: #f9f9f9;
+  cursor: pointer;
+}
+#drop-area:hover {
+  background: #eef;
+}

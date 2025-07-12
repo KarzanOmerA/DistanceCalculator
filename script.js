@@ -1,11 +1,29 @@
 let points = {};
 
+document.getElementById('browseBtn').addEventListener('click', () => {
+  document.getElementById('csvFile').click();
+});
+
 document.getElementById('csvFile').addEventListener('change', function (e) {
-  const file = e.target.files[0];
-  if (!file) return;
+  if (e.target.files.length) handleFile(e.target.files[0]);
+});
 
+const dropArea = document.getElementById('drop-area');
+dropArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropArea.style.background = '#eef';
+});
+dropArea.addEventListener('dragleave', () => {
+  dropArea.style.background = '#f9f9f9';
+});
+dropArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropArea.style.background = '#f9f9f9';
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+
+function handleFile(file) {
   const ext = file.name.split('.').pop().toLowerCase();
-
   if (ext === 'csv') {
     parseCSV(file);
   } else if (ext === 'xlsx' || ext === 'xls') {
@@ -13,7 +31,7 @@ document.getElementById('csvFile').addEventListener('change', function (e) {
   } else {
     alert("Unsupported file type. Please use CSV or Excel.");
   }
-});
+}
 
 function parseCSV(file) {
   Papa.parse(file, {

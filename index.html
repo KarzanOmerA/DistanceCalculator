@@ -9,7 +9,11 @@
 </head>
 <body>
   <h1>2D Distance Calculator</h1>
-  <input type="file" id="csvFile" accept=".csv" />
+  <div id="drop-area">
+    <p>📂 Drag & drop your CSV/XLSX file here, or <button id="browseBtn">browse</button></p>
+    <input type="file" id="csvFile" accept=".csv,.xlsx,.xls" hidden />
+  </div>
+
   <div id="inputs" style="display:none;">
     <input type="text" id="point1" placeholder="Enter first point name" list="pointsList" />
     <input type="text" id="point2" placeholder="Enter second point name" list="pointsList" />

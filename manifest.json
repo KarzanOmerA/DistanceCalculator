@@ -4,7 +4,7 @@
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
-  "description": "Calculate 2D distance between points from a CSV file.",
+  "description": "Calculate 2D distance between points from a CSV or Excel file.",
   "icons": [
     {
       "src": "icon.png",

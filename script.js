@@ -24,12 +24,15 @@ dropArea.addEventListener('drop', (e) => {
 
 function handleFile(file) {
   const ext = file.name.split('.').pop().toLowerCase();
+  if (ext !== 'csv' && ext !== 'xlsx' && ext !== 'xls') {
+    alert("❌ Unsupported file type. Please upload a CSV or Excel file.");
+    return;
+  }
+
   if (ext === 'csv') {
     parseCSV(file);
-  } else if (ext === 'xlsx' || ext === 'xls') {
-    parseExcel(file);
   } else {
-    alert("Unsupported file type. Please use CSV or Excel.");
+    parseExcel(file);
   }
 }
 
@@ -75,15 +78,15 @@ function processData(rows) {
     const x = parseFloat(row[Object.keys(row)[1]]);
     const y = parseFloat(row[Object.keys(row)[2]]);
     if (name && !isNaN(x) && !isNaN(y)) {
-      points[name] = { x, y };
+      points[name] = { x, y, label: row[Object.keys(row)[0]] };
     }
   });
 
   const datalist = document.getElementById('pointsList');
   datalist.innerHTML = '';
-  Object.keys(points).forEach(name => {
+  Object.values(points).forEach(p => {
     const option = document.createElement('option');
-    option.value = name;
+    option.value = p.label;
     datalist.appendChild(option);
   });
 
@@ -91,20 +94,28 @@ function processData(rows) {
 }
 
 function calculateDistance() {
-  const name1 = document.getElementById('point1').value.trim().toLowerCase();
-  const name2 = document.getElementById('point2').value.trim().toLowerCase();
+  const name1Raw = document.getElementById('point1').value.trim();
+  const name2Raw = document.getElementById('point2').value.trim();
+  const name1 = name1Raw.toLowerCase();
+  const name2 = name2Raw.toLowerCase();
 
   if (!(name1 in points) || !(name2 in points)) {
-    const available = Object.keys(points).join(', ');
-    document.getElementById('result').textContent = 
-      "One or both point names not found. Available names: " + available;
+    const available = Object.values(points).map(p => p.label).join(', ');
+    document.getElementById('result').innerHTML =
+      "❌ One or both point names not found.<br>Available names: " + available;
     return;
   }
 
-  const dx = points[name2].x - points[name1].x;
-  const dy = points[name2].y - points[name1].y;
+  const p1 = points[name1];
+  const p2 = points[name2];
+  const dx = p2.x - p1.x;
+  const dy = p2.y - p1.y;
   const distance = Math.sqrt(dx * dx + dy * dy);
 
-  document.getElementById('result').textContent = 
-    `Distance between ${name1} and ${name2} is ${distance.toFixed(3)} units.`;
+  document.getElementById('result').innerHTML = `
+    ✅ Distance between ${p1.label} and ${p2.label} is ${distance.toFixed(3)} units.<br>
+    ✅ Distance between <b>${p1.label}</b> and <b>${p2.label}</b> = ${distance.toFixed(3)}<br>
+    📌 Point (${p1.label}) coordinates: ${p1.x}, ${p1.y}<br>
+    📌 Point (${p2.label}) coordinates: ${p2.x}, ${p2.y}
+  `;
 }

@@ -113,8 +113,7 @@ function calculateDistance() {
   const distance = Math.sqrt(dx * dx + dy * dy);
 
   document.getElementById('result').innerHTML = `
-    ✅ Distance between ${p1.label} and ${p2.label} is ${distance.toFixed(3)} units.<br>
-    ✅ Distance between <b>${p1.label}</b> and <b>${p2.label}</b> = ${distance.toFixed(3)}<br>
+    ✅ Distance between points <b>${p1.label}</b> and <b>${p2.label}</b> = ${distance.toFixed(3)} Units.<br>
     📌 Point (${p1.label}) coordinates: ${p1.x}, ${p1.y}<br>
     📌 Point (${p2.label}) coordinates: ${p2.x}, ${p2.y}
   `;
